@@ -1,12 +1,28 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
+import { AuthService } from './services/auth.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
   templateUrl: './app.html',
-  styleUrl: './app.css'
+  styleUrls: ['./app.css'],
+  standalone: true,
+  imports: [CommonModule, RouterModule],
 })
 export class App {
-  protected title = 'book-inventory';
+  constructor(
+    public authService: AuthService,
+    private router: Router
+  ) {}
+
+  // logout(): void {
+  //   this.authService.logout();
+  //   this.router.navigate(['/login']);
+  // }
+
+  // canAccessAdminLinks(): boolean {
+  //   const roles = this.authService.getUserRoles();
+  //   return roles.includes('Admin') || roles.includes('Editor');
+  // }
 }

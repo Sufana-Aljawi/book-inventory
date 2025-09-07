@@ -1,0 +1,107 @@
+/* Container Background */
+.container-fluid {
+  min-height: 100vh;
+  padding: 2rem;
+  background: linear-gradient(135deg, #a8dadc, #caf0f8);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #023047;
+}
+
+/* Fancy Card */
+.fancy-card {
+  border-radius: 1rem;
+  background: linear-gradient(145deg, #caf0f8, #a8dadc); /* soft baby blue */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fancy-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Card Header Gradient */
+.card-header-gradient {
+  background: linear-gradient(135deg, #0096c7, #0077b6); /* darker baby blue gradient */
+  color: #fff;
+  border-radius: 1rem 1rem 0 0;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+/* Animated Number */
+.animated-number {
+  font-weight: 700;
+  color: #023047;
+  position: relative;
+  animation: popIn 0.6s ease-out;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0); opacity: 0; }
+  70% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+/* Card Text */
+.card-text {
+  font-size: 0.9rem;
+  color: #023047;
+}
+
+/* Buttons */
+.btn {
+  border-radius: 0.6rem;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+  color: #fff;
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #0096c7, #0077b6);
+}
+
+.btn-primary:hover {
+  background: linear-gradient(135deg, #0077b6, #005f8a);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+}
+
+/* Table */
+.table-responsive {
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 0.75rem;
+  padding: 1rem;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+}
+
+table.table-hover tbody tr:hover {
+  background-color: rgba(72,202,228,0.2);
+}
+
+/* Pagination */
+.pagination .page-item.active .page-link {
+  background: linear-gradient(135deg, #90e0ef, #48cae4);
+  border: none;
+  color: #023047;
+}
+
+.pagination .page-link:hover {
+  background-color: #48cae4;
+  color: #fff;
+}
+
+/* Always visible Remove button with nicer style */
+.remove-btn {
+  background: linear-gradient(135deg, #f94144, #d90429); /* red gradient */
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.remove-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}

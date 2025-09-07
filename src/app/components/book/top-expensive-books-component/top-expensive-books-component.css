@@ -1,0 +1,41 @@
+/* Fancy Card */
+.fancy-card {
+  border-radius: 1rem;
+  background: linear-gradient(145deg, #caf0f8, #a8dadc); /* soft baby blue */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.fancy-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* Card Header Gradient */
+.card-header-gradient {
+  background: linear-gradient(135deg, #0096c7, #0077b6); /* darker baby blue gradient */
+  color: #fff;
+  border-radius: 1rem 1rem 0 0;
+  font-weight: 600;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+}
+
+/* Animated Number */
+.animated-number {
+  font-weight: 700;
+  color: #023047;
+  position: relative;
+  animation: popIn 0.6s ease-out;
+}
+
+@keyframes popIn {
+  0% { transform: scale(0); opacity: 0; }
+  70% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+/* Card Text */
+.card-text {
+  font-size: 0.9rem;
+  color: #023047;
+}

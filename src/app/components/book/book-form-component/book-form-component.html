@@ -1,0 +1,82 @@
+<div class="container ">
+  <form [formGroup]="bookForm" (ngSubmit)="onSubmit()">
+
+    <!-- Title -->
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input type="text" id="title" formControlName="title" class="form-control" placeholder="Enter book title">
+      <div *ngIf="bookForm.get('title')?.invalid && bookForm.get('title')?.touched" class="form-text text-danger">
+        Title is required and max 100 characters.
+      </div>
+    </div>
+
+    <!-- ISBN -->
+    <div class="mb-3">
+      <label for="isbn" class="form-label">ISBN</label>
+      <input type="text" id="isbn" formControlName="isbn" class="form-control" placeholder="Enter ISBN">
+      <div *ngIf="bookForm.get('isbn')?.invalid && bookForm.get('isbn')?.touched" class="form-text text-danger">
+        ISBN must be 10–13 characters.
+      </div>
+    </div>
+
+    <!-- Year Published & Price -->
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="yearPublished" class="form-label">Year Published</label>
+        <input type="number" id="yearPublished" formControlName="yearPublished" class="form-control" placeholder="e.g., 2025">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="price" class="form-label">Price</label>
+        <input type="number" id="price" formControlName="price" class="form-control" step="0.01" placeholder="0.00">
+      </div>
+    </div>
+
+    <!-- Stock Quantity -->
+    <div class="mb-3">
+      <label for="stockQuantity" class="form-label">Stock Quantity</label>
+      <input type="number" id="stockQuantity" formControlName="stockQuantity" class="form-control" placeholder="0">
+    </div>
+
+    <!-- Authors -->
+    <div class="mb-3">
+      <label class="form-label">Authors</label>
+      <div formArrayName="authors">
+        <div *ngFor="let authorCtrl of authorsFormArray.controls; let i = index" [formGroupName]="i" class="d-flex mb-2 align-items-center">
+          <select formControlName="authorId" class="form-select me-2">
+            <option value="">Select Author</option>
+            <option *ngFor="let author of authors" [value]="author.id">{{ author.name }}</option>
+          </select>
+          <button type="button" class="btn btn-outline-danger btn-sm" (click)="removeAuthor(i)" [disabled]="authorsFormArray.length === 1">Remove</button>
+        </div>
+      </div>
+      <button type="button" class="btn btn-outline-primary btn-sm mt-2" (click)="addAuthor()">Add Author</button>
+      <div *ngIf="authorsFormArray.invalid && authorsFormArray.touched" class="form-text text-danger">
+        At least one author is required.
+      </div>
+    </div>
+
+    <!-- Book Cover Image -->
+    <div class="mb-3">
+      <label class="form-label">Book Cover Image</label>
+      <input type="file" class="form-control" (change)="onFileSelected($event)">
+      <div *ngIf="selectedFile" class="form-text">Selected: {{ selectedFile }}</div>
+    </div>
+
+    <!-- Image Preview -->
+    <div class="mb-3" *ngIf="imagePreviewUrl || bookForm.get('imageUrl')?.value">
+      <p>Preview:</p>
+      <img [src]="imagePreviewUrl ? imagePreviewUrl : bookForm.get('imageUrl')?.value" class="img-fluid img-thumbnail" style="max-width: 200px;" alt="Book Cover Preview">
+    </div>
+
+    <!-- Buttons -->
+    <div class="mb-3">
+      <button type="submit" class="btn btn-primary me-2" [disabled]="bookForm.invalid">{{ isEditMode ? 'Update Book' : 'Create Book' }}</button>
+      <button type="button" class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+    </div>
+
+    <!-- Messages -->
+    <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+  </form>
+</div>

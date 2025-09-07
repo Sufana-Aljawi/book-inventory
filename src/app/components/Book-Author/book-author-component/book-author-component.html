@@ -1,0 +1,110 @@
+<div class="container-fluid ">
+
+  <!-- Success & Error Messages as Fancy Cards -->
+<div *ngIf="successMessage" class="p-3 text-success-emphasis bg-success-subtle border border-success-subtle rounded-3 mb-3">
+  {{ successMessage }}
+</div>
+
+<!-- Error Message -->
+<div *ngIf="errorMessage" class="p-3 text-warning-emphasis bg-warning-subtle border border-warning-subtle rounded-3 mb-3">
+  {{ errorMessage }}
+</div>
+
+<div class="card fancy-card text-center mb-4" style="max-width: 18rem; margin: auto;">
+  <div class="card-header card-header-gradient fs-5">Total Book-Author Relations</div>
+  <div class="card-body">
+    <h3 class="card-title display-6 animated-number">{{ totalItems }}</h3>
+    <p class="card-text text-muted">Number of relations in the system</p>
+  </div>
+</div>
+
+
+
+  <!-- Action Buttons -->
+  <div class="d-flex flex-wrap justify-content-center mb-4 gap-2">
+    <button class="btn btn-primary my-2" (click)="assignAuthor()"> + Assign Author to Book</button>
+    <button class="btn btn-primary my-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#bookAuthorMostOffcanvas" aria-controls="bookAuthorMostOffcanvas">Books with Most Authors</button>
+    <button class="btn btn-primary my-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#authorsMostBooksOffcanvas" aria-controls="authorsMostBooksOffcanvas">Top Authors by book</button>
+  </div>
+
+  <!-- Offcanvas Sections -->
+  <!-- //Shows which books have the highest number of authors. -->
+  <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="bookAuthorMostOffcanvas" aria-labelledby="bookAuthorMostOffcanvasLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="bookAuthorMostOffcanvasLabel">Books with Most Authors</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <p>Total Books: {{ booksMostAuthors.length }}</p>
+      <ul class="list-group list-group-flush">
+        <li *ngFor="let item of booksMostAuthors" class="list-group-item d-flex justify-content-between align-items-center">
+          {{ item.title }}
+          <span class="badge bg-primary rounded-pill">{{ item.authorCount }} authors</span>
+        </li>
+      </ul>
+      <p *ngIf="booksMostAuthors.length === 0" class="text-muted">No books found.</p>
+    </div>
+  </div>
+
+  <!-- //Highlights authors who contribute to the most books -->
+
+  <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="authorsMostBooksOffcanvas" aria-labelledby="authorsMostBooksOffcanvasLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="authorsMostBooksOffcanvasLabel">Top Authors by Books</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <p>Total Authors: {{ authorsMostBooks.length }}</p>
+      <ul class="list-group list-group-flush">
+        <li *ngFor="let item of authorsMostBooks" class="list-group-item d-flex justify-content-between align-items-center">
+          {{ item.name }}
+          <span class="badge bg-primary rounded-pill">{{ item.bookCount }} books</span>
+        </li>
+      </ul>
+      <p *ngIf="authorsMostBooks.length === 0" class="text-muted mt-2">No data found.</p>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-responsive shadow-sm rounded">
+    <table class="table table-hover align-middle text-center">
+      <thead class="table-light gradient-header">
+        <tr>
+          <th>Book ID</th>
+          <th>Book Title</th>
+          <th>Author ID</th>
+          <th>Author Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of totalBookAuthor" class="text-center">
+          <td>{{ item.bookId }}</td>
+          <td>{{ item.book}}</td>
+          <td>{{ item.authorId }}</td>
+          <td>{{ item.author}}</td>
+          <td><button class="btn btn-sm btn-danger remove-btn" (click)="confirmRemove(item.bookId, item.authorId)"> Delete </button>
+          </td>
+        </tr>
+        <tr *ngIf="totalBookAuthor?.length === 0">
+          <td colspan="5" class="text-center text-muted">No book-author relations found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <nav *ngIf="totalPages > 1" aria-label="Page navigation" class="mt-4">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="page === 1">
+        <a class="page-link" (click)="onPrevPage()" href="javascript:void(0)">Previous</a>
+      </li>
+      <li *ngFor="let p of [].constructor(totalPages); let i = index" class="page-item" [class.active]="page === i + 1">
+        <a class="page-link" (click)="goToPage(i + 1)" href="javascript:void(0)">{{ i + 1 }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="page === totalPages">
+        <a class="page-link" (click)="onNextPage()" href="javascript:void(0)">Next</a>
+      </li>
+    </ul>
+  </nav>
+</div>

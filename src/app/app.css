@@ -1,0 +1,33 @@
+
+.custom-navbar {
+  background: linear-gradient(135deg, #127aba, #3dbad3); /* baby blue gradient */
+}
+
+.custom-navbar .nav-link {
+  position: relative;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.custom-navbar .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  width: 0;
+  height: 2px;
+  background-color: #d1ecf1; /* light cyan underline */
+  transition: width 0.3s ease;
+}
+
+.custom-navbar .nav-link:hover {
+  color: #d1ecf1; /* text color changes smoothly */
+}
+
+.custom-navbar .nav-link:hover::after {
+  width: 100%; /* animate underline */
+}
+
+.custom-container{
+    background: linear-gradient(135deg, #094b74, #3dbad3); /* baby blue gradient */
+}

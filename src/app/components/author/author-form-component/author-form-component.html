@@ -1,0 +1,40 @@
+<!-- Author Form Modal -->
+<div class="modal fade show d-block" tabindex="-1" role="dialog" (click)="cancel()">
+  <div class="modal-dialog modal-dialog-centered" role="document" (click)="$event.stopPropagation()">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ isEditMode ? 'Update Author' : 'Create New Author' }}</h5>
+        <button type="button" class="btn-close" aria-label="Close" (click)="cancel()"></button>
+      </div>
+
+      <div class="modal-body">
+        <form (ngSubmit)="saveAuthor()" #authorForm="ngForm">
+          <div class="mb-3">
+            <label for="name" class="form-label">Author Name</label>
+            <input
+              type="text"
+              id="name"
+              name="name"
+              class="form-control"
+              required
+              [(ngModel)]="author.name"
+            />
+          </div>
+
+          <div class="d-flex justify-content-end">
+            <button
+              type="submit"
+              class="btn btn-primary me-2"
+              [disabled]="authorForm.invalid"
+            >
+              {{ isEditMode ? 'Update' : 'Save' }}
+            </button>
+            <button type="button" class="btn btn-secondary" (click)="cancel()">Cancel</button>
+          </div>
+        </form>
+
+        <p *ngIf="message" class="text-muted mt-2">{{ message }}</p>
+      </div>
+    </div>
+  </div>
+</div>

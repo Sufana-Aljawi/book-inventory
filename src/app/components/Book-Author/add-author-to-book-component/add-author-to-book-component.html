@@ -1,0 +1,57 @@
+<div class="container mt-4">
+  <h3 class="mb-4">Assign Author to Book</h3>
+  
+      <!-- Message (success/error) -->
+    <div *ngIf="message" class="mb-3">
+      <div
+        class="alert"
+        [ngClass]="{ 'alert-success': success, 'alert-danger': !success }"
+      >
+        {{ message }}
+      </div>
+    </div>
+
+  <form (ngSubmit)="assignAuthor(selectedBookId!, selectedAuthorId!)">
+    <!-- Select Book -->
+    <div class="mb-3">
+      <label for="bookSelect" class="form-label">Select Book</label>
+      <select
+        id="bookSelect"
+        class="form-select"
+        [(ngModel)]="selectedBookId"
+        name="bookSelect"
+        required
+      >
+        <option [ngValue]="null" disabled>Select a book...</option>
+        <option *ngFor="let book of books" [ngValue]="book.id">
+          {{ book.title }}
+        </option>
+      </select>
+    </div>
+
+    <!-- Select Author -->
+    <div class="mb-3">
+      <label for="authorSelect" class="form-label">Select Author</label>
+      <select
+        id="authorSelect"
+        class="form-select"
+        [(ngModel)]="selectedAuthorId"
+        name="authorSelect"
+        required
+      >
+        <option [ngValue]="null" disabled>Select an author...</option>
+        <option *ngFor="let author of authors" [ngValue]="author.id">
+          {{ author.name }}
+        </option>
+      </select>
+    </div>
+    <!-- Submit button -->
+    <button
+      type="submit"
+      class="btn btn-primary"
+      [disabled]="!selectedBookId || !selectedAuthorId"
+    >
+      Assign Author
+    </button>
+  </form>
+</div>

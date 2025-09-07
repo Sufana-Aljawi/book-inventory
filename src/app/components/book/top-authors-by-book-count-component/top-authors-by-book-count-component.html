@@ -1,0 +1,20 @@
+<!-- Top Authors Cards -->
+<div *ngIf="loading" class="mb-3">Loading top authors...</div>
+<div *ngIf="errorMessage" class="text-danger mb-3">{{ errorMessage }}</div>
+
+<div class="row" *ngIf="authors.length">
+  <div class="col-md-4 mb-3" *ngFor="let author of authors">
+    <div class="card fancy-card h-100">
+      <div class="card-header card-header-gradient text-center">
+        Top Author
+      </div>
+      <div class="card-body text-center">
+        <h5 class="card-title">{{ author.authorName }}</h5>
+        <p class="card-text">
+          Books Written: 
+          <span class="animated-number">{{ author.bookCount }}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
