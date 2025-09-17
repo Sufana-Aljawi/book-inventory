@@ -67,14 +67,30 @@ export class AuthService {
     }
   }
 
+  currentRoles(): string[] {
+  const dec = this.getDecodedToken();
+  if (!dec) return [];
+  const raw = (dec.role ?? dec.roles) as string | string[] | undefined;
+  return Array.isArray(raw) ? raw : raw ? [raw] : [];
+}
+
+  hasRole(role: string): boolean {
+  return this.currentRoles().includes(role);
+  }
+
+  hasAnyRole(roles: string[]): boolean {
+  const mine = this.currentRoles();
+  return roles.some(r => mine.includes(r));
+  }
+
   // Private helper to initialize BehaviorSubject
   private hasToken(): boolean {
     return !!localStorage.getItem('token');
   }
 
-register(payload: userRegistration): Observable<userRegistrationResponse> {
+  register(payload: userRegistration): Observable<userRegistrationResponse> {
   return this.http.post<userRegistrationResponse>(`${this.apiUrl}/register`, payload);
-}
+  }
 
 
 }

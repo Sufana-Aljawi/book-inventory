@@ -1,3 +1,5 @@
+<div class="shadow p-3 mb-5 bg-body-tertiary rounded container-fluid" style="width: 500px;">
+  <h2 class="text-center mb-4">Register</h2>
 <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
   <!-- Email -->
   <div class="mb-3">
@@ -63,3 +65,5 @@
     {{ isLoading ? 'Creating account…' : 'Register' }}
   </button>
 </form>
+
+</div>

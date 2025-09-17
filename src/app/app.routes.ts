@@ -12,7 +12,11 @@ import { AddAuthorToBookComponent } from './components/Book-Author/add-author-to
 import { AdminComponent } from './components/admin/admin-component/admin-component';
 import { LoginComponent } from './components/authentication/login-component/login-component';
 import { RegisterComponent } from './components/authentication/register-component/register-component';
+import { ForbiddenComponent } from './components/forbidden/forbidden.component';
+import { authGuard } from './guards/auth.guard';
 import { HomeComponent } from './components/home/home';
+
+
 export const routes: Routes = [
     {path:'books', component: BookListComponent},
     { path:'create/book', component: BookFormComponent},
@@ -23,15 +27,9 @@ export const routes: Routes = [
     {path: 'authors', component: AuthorListComponent},
     {path: 'book-author', component: BookAuthorComponent},
     {path: 'book-author/add' , component : AddAuthorToBookComponent},
-    {path: 'admin', component : AdminComponent},
+    { path: 'admin', component: AdminComponent, canActivate: [authGuard], data: { roles: ['Admin'] } },
     {path: 'login', component : LoginComponent},
     {path: 'register', component : RegisterComponent},
-    { path: '', component: HomeComponent },
     {path: '', redirectTo: '/', pathMatch: 'full' },
 ];
 
-@NgModule({
-    imports: [RouterModule.forRoot(routes)],
-    exports: [RouterModule]
-})
-export class AppRoutingModule { }

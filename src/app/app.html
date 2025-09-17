@@ -6,6 +6,7 @@
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNav">
       <ul class="navbar-nav ms-auto">
         <li class="nav-item">
@@ -25,18 +26,28 @@
         </li>
         <li class="nav-item">
           <a class="nav-link text-white" routerLink="/register" routerLinkActive="active">Register</a>
+        </li>
+
+        <!-- Show if logged in -->
+        <ng-container *ngIf="authService.isLoggedIn()">
+          <li class="nav-item">
+            <a class="nav-link text-white" (click)="onLogout()" style="cursor:pointer">Logout</a>
+          </li>
+        </ng-container>
       </ul>
     </div>
   </div>
 </nav>
 
+
 <!-- Main content -->
 <router-outlet></router-outlet>
 
 <!-- Footer -->
-<footer class=" text-white text-center py-3 mt-4 custom-footer">
+<footer class="footer text-center">
   <div class="container">
     <p class="text-muted">2025 Book Store. All rights reserved.</p>
     <small class="text-muted">Built with ❤️ using Angular & ASP.NET Core</small>
   </div>
 </footer>
+

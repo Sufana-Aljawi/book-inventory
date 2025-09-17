@@ -16,13 +16,9 @@ export class App {
     private router: Router
   ) {}
 
-  // logout(): void {
-  //   this.authService.logout();
-  //   this.router.navigate(['/login']);
-  // }
-
-  // canAccessAdminLinks(): boolean {
-  //   const roles = this.authService.getUserRoles();
-  //   return roles.includes('Admin') || roles.includes('Editor');
-  // }
+ onLogout() {
+    this.authService.logout();
+    this.router.navigate(['/login']); // redirect after logout
+  }
+  
 }
