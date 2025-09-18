@@ -38,6 +38,8 @@ export class BookListComponent implements OnInit {
   totalPages = 0;
   totalItems = 0;
   totalBooks: number = 0;
+  dateSortDesc = true; // newest first by default
+
 
 
   constructor(
@@ -178,15 +180,27 @@ deleteBook(id: number): void {
     return book.authors?.map(a => a.name).join(', ') || '-';
   }
 // Method to sort books by stock quantity and price
-sortBooks(by: 'price' | 'stock'): void {
+sortBooks(by: 'price' | 'stock' | 'date'): void {
   if (by === 'stock') {
     this.stockSortAsc = !this.stockSortAsc;
-    this.filteredBooks.sort((a,b)=> this.stockSortAsc ? a.stockQuantity - b.stockQuantity : b.stockQuantity - a.stockQuantity);
+    this.filteredBooks.sort((a, b) =>
+      this.stockSortAsc ? a.stockQuantity - b.stockQuantity : b.stockQuantity - a.stockQuantity
+    );
   } else if (by === 'price') {
     this.priceSortAsc = !this.priceSortAsc;
-    this.filteredBooks.sort((a,b)=> this.priceSortAsc ? a.price - b.price : b.price - a.price);
+    this.filteredBooks.sort((a, b) =>
+      this.priceSortAsc ? a.price - b.price : b.price - a.price
+    );
+  } else if (by === 'date') {
+    this.dateSortDesc = !this.dateSortDesc;
+    this.filteredBooks.sort((a, b) => {
+      const ad = new Date(a.dateAdded).getTime();
+      const bd = new Date(b.dateAdded).getTime();
+      return this.dateSortDesc ? bd - ad : ad - bd;
+    });
   }
 }
+
 // Method to go to a specific page
 goToPage(page: number): void {
   if (page >= 1 && page <= this.totalPages) {

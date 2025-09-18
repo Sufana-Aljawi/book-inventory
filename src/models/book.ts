@@ -7,6 +7,7 @@ export interface Book {
   yearPublished: number;
   price: number;
   stockQuantity: number;
+  dateAdded: Date;
   imageUrl?: string;
   authors: Author[];
 }

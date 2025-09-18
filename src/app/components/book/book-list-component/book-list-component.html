@@ -36,6 +36,7 @@
           <th>Stock</th>
           <th>Price</th>
           <th>Year</th>
+          <th>Date Added <span class="text-muted" style="cursor:pointer" (click)="sortBooks('date')">↕</span></th>
           <th>Authors</th>
           <th>Actions</th>
         </tr>
@@ -58,6 +59,13 @@
           <td>{{ book.stockQuantity }}</td>
           <td>{{ book.price | currency }}</td>
           <td>{{ book.yearPublished }}</td>
+            <td>
+      <!-- Graceful fallback if undefined -->
+      <ng-container *ngIf="book.dateAdded; else noDate">
+        {{ book.dateAdded | date:'medium' }}
+      </ng-container>
+      <ng-template #noDate><span class="text-muted">—</span></ng-template>
+    </td>
           <td>{{ getAuthorNames(book) }}</td>
          <td>
            <div class="action-buttons">
