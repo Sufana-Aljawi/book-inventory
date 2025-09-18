@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { RouterModule, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { AuthService } from './services/auth.service';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { Inject } from '@angular/core';
+
 
 @Component({
   selector: 'app-root',
@@ -16,9 +19,8 @@ export class App {
     private router: Router
   ) {}
 
- onLogout() {
+  onLogout() {
     this.authService.logout();
     this.router.navigate(['/login']); // redirect after logout
   }
-  
 }
