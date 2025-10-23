@@ -1,0 +1,56 @@
+<div class="container my-4">
+    <h3 class="fs-1">Users</h3>
+
+      <!-- Assign Role Form -->
+  <div class="mt-10">
+    <h4>Assign Role</h4>
+    <div class="row g-2 align-items-center">
+      <div class="col-md-5">
+        <input type="email" class="form-control" placeholder="User Email" [(ngModel)]="selectedUserEmail" name="email">
+      </div>
+      <div class="col-md-4">
+        <select class="form-select" [(ngModel)]="selectedRole" name="role">
+          <option value="" disabled>Select Role</option>
+          <option *ngFor="let role of roles" [value]="role">{{ role }}</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <button class="btn btn-primary w-100" (click)="assignRoleToUser()">Assign Role</button>
+      </div>
+    </div>
+
+    <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+  </div>
+
+
+  <table class="table table-striped" *ngIf="users.length">
+    <thead>
+      <tr>
+        <th>Full Name</th>
+        <th>Email</th>
+        <th>Roles</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.fullName }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.roles.join(', ') }}</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination -->
+  <div *ngIf="totalPages > 1" class="d-flex justify-content-center mt-3">
+    <button class="btn btn-outline-primary me-2" (click)="prevPage()" [disabled]="page === 1">Prev</button>
+    <span class="align-self-center">Page {{ page }} / {{ totalPages }}</span>
+    <button class="btn btn-outline-primary ms-2" (click)="nextPage()" [disabled]="page === totalPages">Next</button>
+  </div>
+
+  <div *ngIf="!users.length" class="text-center text-muted mt-3">
+    No users found.
+  </div>
+
+
+</div>

@@ -1,0 +1,67 @@
+<div
+  class="login-container d-flex justify-content-center align-items-center min-vh-100 position-relative overflow-hidden"
+>
+  <!-- Login card -->
+  <div class="login-card card p-4 shadow-lg animate-card">
+    <div class="text-center mb-4">
+      <h2 class="text-primary animate-bounce">Book Inventory Login</h2>
+      <p>Access your library dashboard</p>
+    </div>
+
+    <!-- Login Form -->
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+      <div class="mb-3 animate-slide-in-left">
+        <label for="username" class="form-label">Username</label>
+        <input
+          type="text"
+          id="username"
+          class="form-control animate-input"
+          [(ngModel)]="loginData.username"
+          name="username"
+          required
+          placeholder="Enter username"
+        />
+      </div>
+
+      <div class="mb-3 animate-slide-in-right">
+        <label for="password" class="form-label">Password</label>
+        <input
+          type="password"
+          id="password"
+          class="form-control animate-input"
+          [(ngModel)]="loginData.password"
+          name="password"
+          required
+          placeholder="Enter password"
+        />
+      </div>
+
+      <!-- Error Message -->
+      <div *ngIf="errorMessage" class="alert alert-danger animate-slide-in-up">
+        {{ errorMessage }}
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="btn btn-primary w-100 mt-3 animate-btn"
+        [disabled]="isLoading || !loginForm.valid"
+      >
+        <span *ngIf="!isLoading">Login</span>
+        <span *ngIf="isLoading">Logging in...</span>
+      </button>
+    </form>
+
+    <div class="text-center mt-3">
+      <a href="#">Forgot password?</a>
+    </div>
+
+    <!-- Register link -->
+    <div class="text-center mt-2">
+      <small>
+        Don't have an account?
+        <a routerLink="/register">Register</a>
+      </small>
+    </div>
+  </div>
+</div>

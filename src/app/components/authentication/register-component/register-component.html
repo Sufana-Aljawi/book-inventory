@@ -1,0 +1,69 @@
+<div class="shadow p-3 mb-5 bg-body-tertiary rounded container-fluid" style="width: 500px;">
+  <h2 class="text-center mb-4">Register</h2>
+<form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+  <!-- Email -->
+  <div class="mb-3">
+    <label for="email" class="form-label">Email address</label>
+    <input
+      type="email"
+      id="email"
+      class="form-control"
+      name="username"
+      [(ngModel)]="registerData.username"
+      required
+      email
+      #username="ngModel"
+    />
+    <div class="form-text">We'll never share your email with anyone else.</div>
+    <div class="text-danger" *ngIf="username.invalid && username.touched">
+      Valid email is required.
+    </div>
+  </div>
+
+  <!-- Full Name -->
+  <div class="mb-3">
+    <label for="fullName" class="form-label">Full Name</label>
+    <input
+      type="text"
+      id="fullName"
+      class="form-control"
+      name="fullName"
+      [(ngModel)]="registerData.fullName"
+      required
+      minlength="2"
+      #fullName="ngModel"
+    />
+    <div class="text-danger" *ngIf="fullName.invalid && fullName.touched">
+      Full name is required (min 2 characters).
+    </div>
+  </div>
+
+  <!-- Password -->
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input
+      type="password"
+      id="password"
+      class="form-control"
+      name="password"
+      [(ngModel)]="registerData.password"
+      required
+      minlength="8"
+      #password="ngModel"
+    />
+    <div class="text-danger" *ngIf="password.invalid && password.touched">
+       Password is required (min 8 characters).
+    </div>
+  </div>
+
+  <!-- Alerts -->
+  <div class="alert alert-danger py-2" *ngIf="errorMessage">{{ errorMessage }}</div>
+  <div class="alert alert-success py-2" *ngIf="successMessage">{{ successMessage }}</div>
+
+  <!-- Submit -->
+  <button type="submit" class="btn btn-primary w-100" [disabled]="isLoading || registerForm.invalid">
+    {{ isLoading ? 'Creating account…' : 'Register' }}
+  </button>
+</form>
+
+</div>

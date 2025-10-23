@@ -1,0 +1,138 @@
+<div class="container-fluid">
+  <!-- Total Authors Card -->
+  <div class="card fancy-card text-center mb-4" style="max-width: 18rem; margin: auto;">
+    <div class="card-header card-header-gradient fs-5">Total Authors</div>
+    <div class="card-body">
+      <h3 class="card-title display-6 animated-number">{{ totalAuthors }}</h3>
+      <p class="card-text text-muted">Number of authors in the system</p>
+    </div>
+  </div>
+
+  <!-- Offcanvas Buttons -->
+<!-- Offcanvas Buttons -->
+<div class="d-flex flex-wrap justify-content-center mb-4 gap-2">
+  <button (click)="openCreateAuthorModal()" class="btn btn-success my-2">+ Add new author</button>
+  <button class="btn btn-info my-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#authorsOffcanvas" aria-controls="authorsOffcanvas">
+    View Authors without Books
+  </button>
+
+  <button class="btn btn-primary my-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#experiencedAuthorsOffcanvas" aria-controls="experiencedAuthorsOffcanvas">
+    View Most Experienced Authors
+  </button>
+
+  <button class="btn btn-success my-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#recentAuthorsOffcanvas" aria-controls="recentAuthorsOffcanvas">
+    View Recent Authors
+  </button>
+
+</div>
+
+  <!-- Offcanvas Modals -->
+  <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="authorsOffcanvas" aria-labelledby="authorsOffcanvasLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="authorsOffcanvasLabel">Authors without Books</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <p>Total Authors: {{ AuthorsWBooks.length }}</p>
+      <ul class="list-group list-group-flush">
+        <li *ngFor="let author of AuthorsWBooks" class="list-group-item">{{ author.name }}</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="experiencedAuthorsOffcanvas" aria-labelledby="experiencedAuthorsOffcanvasLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="experiencedAuthorsOffcanvasLabel">Most Experienced Authors</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <p>Total Authors: {{ mostExperiencedAuthors.length }}</p>
+      <ul class="list-group list-group-flush">
+        <li *ngFor="let author of mostExperiencedAuthors" class="list-group-item">
+          {{ author.name }} ({{ author.careerLength }} years)
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1" id="recentAuthorsOffcanvas" aria-labelledby="recentAuthorsOffcanvasLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="recentAuthorsOffcanvasLabel">Authors with Recent Books</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <p>Total Authors: {{ RecentAuthors.length }}</p>
+      <ul class="list-group list-group-flush">
+        <li *ngFor="let author of RecentAuthors" class="list-group-item">
+          {{ author.name }} - Recent Year: {{ author.mostRecentYear }}
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Message -->
+  <p *ngIf="message" class="text-muted">{{ message }}</p>
+
+  <!-- 📋 Authors Table -->
+  <div class="table-responsive fancy-card p-3">
+    <table class="table table-hover w-100 text-center">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let author of authors">
+          <td>{{ author.id }}</td>
+          <td>{{ author.name }}</td>
+          <td>
+           <div class="action-buttons">
+              <button (click)="openEditAuthorModal(author)" class="edit-btn ">Edit</button>
+              <button (click)="deleteAuthor(author.id)" class="remove-btn ">Delete</button>
+            </div>
+          </td>
+        </tr>
+        <tr *ngIf="authors.length === 0">
+          <td colspan="3" class="text-center text-muted">No authors found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <nav *ngIf="totalPages > 1" aria-label="Page navigation" class="mt-3">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="page === 1">
+        <a class="page-link" (click)="prevPage()" href="javascript:void(0)">Previous</a>
+      </li>
+      <li *ngFor="let p of [].constructor(totalPages); let i = index"
+          class="page-item"
+          [class.active]="page === i + 1">
+        <a class="page-link" (click)="goToPage(i + 1)" href="javascript:void(0)">{{ i + 1 }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="page === totalPages">
+        <a class="page-link" (click)="nextPage()" href="javascript:void(0)">Next</a>
+      </li>
+    </ul>
+  </nav>
+
+  <!-- Author Details Modal -->
+  <div *ngIf="selectedAuthor" class="modal-overlay" (click)="selectedAuthor = null">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <h3>Author Details</h3>
+      <p><strong>ID:</strong> {{ selectedAuthor.id }}</p>
+      <p><strong>Name:</strong> {{ selectedAuthor.name }}</p>
+      <button class="btn btn-secondary" (click)="selectedAuthor = null">Close</button>
+    </div>
+  </div>
+
+  <!-- Author Form Modal -->
+  <app-author-form-component 
+    *ngIf="showAuthorFormModal"
+    [author]="currentAuthor"
+    (saved)="onAuthorSaved($event)"
+    (canceled)="closeAuthorFormModal()">
+  </app-author-form-component>
+</div>

@@ -1,0 +1,100 @@
+<div class="container-fluid ">
+
+  <!-- Total Books Card -->
+<div class="card fancy-card text-center mb-4" style="max-width: 18rem; margin: auto;">
+  <div class="card-header card-header-gradient fs-5">Total Books</div>
+  <div class="card-body">
+    <h3 class="card-title display-6 animated-number">{{ totalBooks }}</h3>
+    <p class="card-text text-muted">Books available in the system</p>
+  </div>
+</div>
+
+
+  <!-- Action Buttons -->
+  <div class="d-flex flex-wrap justify-content-center mb-4 gap-2">
+    <button (click)="createBook()" class="btn btn-success my-2 ">+ Add New Book</button>
+    <button (click)="booksByYear()" class="btn btn-info my-2">Books by Year</button>
+    <button (click)="topExpensiveBooks()" class="btn btn-warning my-2" >Top Expensive Books</button>
+    <button (click)="topAuthorByBookCount()" class="btn btn-primary my-2 ">Top Authors by Books</button>
+  </div>
+
+  <!-- Search Bar -->
+  <div class="d-flex justify-content-center mb-4">
+    <input type="text" [(ngModel)]="searchTerm" placeholder="Search by title or author" class="form-control me-2 w-50 shadow-sm">
+    <button (click)="searchBooks()" class="btn btn-primary shadow-sm">Search</button>
+  </div>
+
+  <!-- Books Table -->
+  <div class="table-responsive shadow-sm rounded">
+    <table class="table table-hover align-middle">
+      <thead class="table-light text-center">
+        <tr>
+          <th>ID</th>
+          <th>Cover</th>
+          <th>Title</th>
+          <th>ISBN</th>
+          <th>Stock</th>
+          <th>Price</th>
+          <th>Year</th>
+          <th>Date Added <span class="text-muted" style="cursor:pointer" (click)="sortBooks('date')">↕</span></th>
+          <th>Authors</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let book of filteredBooks" class="text-center">
+          <td>{{ book.id }}</td>
+          <td>
+            <img *ngIf="book.imageUrl; else noImage"
+                 [src]="book.imageUrl"
+                 alt="{{ book.title }}"
+                 class="img-thumbnail"
+                 style="width: 50px; height: auto;">
+            <ng-template #noImage>
+              <span class="text-muted">No Image</span>
+            </ng-template>
+          </td>
+          <td>{{ book.title }}</td>
+          <td>{{ book.isbn }}</td>
+          <td>{{ book.stockQuantity }}</td>
+          <td>{{ book.price | currency }}</td>
+          <td>{{ book.yearPublished }}</td>
+            <td>
+      <!-- Graceful fallback if undefined -->
+      <ng-container *ngIf="book.dateAdded; else noDate">
+        {{ book.dateAdded | date:'medium' }}
+      </ng-container>
+      <ng-template #noDate><span class="text-muted">—</span></ng-template>
+    </td>
+          <td>{{ getAuthorNames(book) }}</td>
+         <td>
+           <div class="action-buttons">
+             <button (click)="editBook(book.id)" class="edit-btn btn-sm">Edit</button>
+             <button (click)="deleteBook(book.id)" class="remove-btn btn-sm">Delete</button>
+           </div>
+          </td>
+        </tr>
+        <tr *ngIf="filteredBooks.length === 0">
+          <td colspan="9" class="text-center text-muted">No books found.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <nav *ngIf="totalPages > 1" aria-label="Page navigation" class="mt-4">
+    <ul class="pagination justify-content-center">
+      <li class="page-item" [class.disabled]="pageNumber === 1">
+        <a class="page-link" (click)="onPrevPage()" href="javascript:void(0)">Previous</a>
+      </li>
+      <li *ngFor="let page of [].constructor(totalPages); let i = index"
+          class="page-item" [class.active]="pageNumber === i + 1">
+        <a class="page-link" (click)="goToPage(i + 1)" href="javascript:void(0)">{{ i + 1 }}</a>
+      </li>
+      <li class="page-item" [class.disabled]="pageNumber === totalPages">
+        <a class="page-link" (click)="onNextPage()" href="javascript:void(0)">Next</a>
+      </li>
+    </ul>
+  </nav>
+
+</div>

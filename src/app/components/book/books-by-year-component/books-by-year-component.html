@@ -1,0 +1,15 @@
+<div *ngIf="errorMessage" class="text-danger mb-3">{{ errorMessage }}</div>
+
+<div class="row" *ngIf="booksByYear.length">
+  <div class="col-md-3 mb-3" *ngFor="let item of booksByYear">
+    <div class="card fancy-card h-100 text-center">
+      <div class="card-header card-header-gradient">
+        Year {{ item.year }}
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Books Published</h5>
+        <p class="card-text animated-number">{{ item.count }}</p>
+      </div>
+    </div>
+  </div>
+</div>
