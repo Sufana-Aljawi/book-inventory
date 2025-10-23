@@ -48,11 +48,11 @@
       name="password"
       [(ngModel)]="registerData.password"
       required
-      minlength="6"
+      minlength="8"
       #password="ngModel"
     />
     <div class="text-danger" *ngIf="password.invalid && password.touched">
-      Password must be at least 6 characters.
+       Password is required (min 8 characters).
     </div>
   </div>
 
